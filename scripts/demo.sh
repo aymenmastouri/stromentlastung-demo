@@ -111,6 +111,14 @@ cmd_up() {
     git -C "$dir" worktree add -q --detach "$DEMO/${changed[$i]}" "${shas[$i]}"
   done
 
+  # Die erzeugten Dateien liegen im Plattform-Verzeichnis, damit die Baupfade stimmen, aber
+  # sie werden dort lokal ausgeblendet. Im Repository des Verfahrens darf nichts stehen, was
+  # die Vorführung verrät; die Kette liest es sonst wie Systemdokumentation.
+  local exclude="$PLATFORM/.git/info/exclude"
+  for eintrag in docker-compose.demo.yml gateway/nginx-fixed.conf; do
+    grep -qxF "$eintrag" "$exclude" 2>/dev/null || echo "$eintrag" >> "$exclude"
+  done
+
   generate_override "$branch" "${changed[@]}"
   generate_nginx "${changed[@]}"
   say "Build and start"
