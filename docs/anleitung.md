@@ -488,9 +488,9 @@ nichts zu vergleichen.
 
 | | |
 | --- | --- |
-| Fachkonzept, jede Regel mit Fundstelle | [Fachkonzept, jede Regel mit Fundstelle](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/fachkonzept.md) |
-| Architektur und Bauplan | [Architektur und Bauplan](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/architektur.md) |
-| Betrieb, Konten, Datenbanken | [README des Verfahrens](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/README.md) |
+| Fachkonzept, jede Regel mit Fundstelle | [docs/fachkonzept.md](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/fachkonzept.md) |
+| Architektur und Bauplan | [docs/architektur.md](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/architektur.md) |
+| Betrieb, Konten, Datenbanken | [README](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/README.md) |
 
 **Rechtstexte**
 
