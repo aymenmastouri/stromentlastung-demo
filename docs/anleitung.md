@@ -23,7 +23,7 @@ Zahlt das Unternehmen den zurückgeforderten Betrag nicht bis zur Fälligkeit, e
 Säumniszuschläge.
 
 Diese fünf Sätze reichen dem Publikum. Alles Weitere steht im
-[Fachkonzept](fachkonzept.md), das jede Regel mit ihrer Fundstelle nennt.
+[Fachkonzept](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/fachkonzept.md), das jede Regel mit ihrer Fundstelle nennt.
 
 Das Verfahren ist nachgebaut und bewusst vereinfacht. Es ist kein Verfahren der
 Zollverwaltung. Die Anwendung sagt das in jeder Ansicht im Kopfband: *Referenzverfahren –
@@ -187,7 +187,7 @@ Passwort überall `stromentlastung`.
 | `roth@` | Prüfdienst | Prüfvermerk und Änderung |
 | `ostsee-werft@` | Unternehmen mit der offenen Rückforderung | Sicht des Betroffenen |
 
-Vollständige Liste im [README](../README.md).
+Vollständige Liste im [README des Verfahrens](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/README.md).
 
 ### Was vorher zu prüfen ist
 
@@ -488,9 +488,9 @@ nichts zu vergleichen.
 
 | | |
 | --- | --- |
-| Fachkonzept, jede Regel mit Fundstelle | [docs/fachkonzept.md](fachkonzept.md) |
-| Architektur und Bauplan | [docs/architektur.md](architektur.md) |
-| Betrieb, Konten, Datenbanken | [README](../README.md) |
+| Fachkonzept, jede Regel mit Fundstelle | [Fachkonzept, jede Regel mit Fundstelle](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/fachkonzept.md) |
+| Architektur und Bauplan | [Architektur und Bauplan](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/docs/architektur.md) |
+| Betrieb, Konten, Datenbanken | [README des Verfahrens](https://github.com/aymenmastouri/stromentlastung-platform/blob/main/README.md) |
 
 **Rechtstexte**
 
