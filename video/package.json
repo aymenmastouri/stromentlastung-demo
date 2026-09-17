@@ -1,0 +1,19 @@
+{
+  "name": "stromentlastung-demo-video",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Playwright-Aufnahme des Vorführvideos: Von der Anforderung bis zur Auslieferung",
+  "scripts": {
+    "install-browser": "playwright install chromium",
+    "trockenlauf": "MODUS=trockenlauf playwright test",
+    "aufnahme": "MODUS=aufnahme playwright test",
+    "texte": "node --experimental-strip-types --no-warnings texte-md.mjs",
+    "schnitt": "./schnitt.sh",
+    "typen": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}
