@@ -145,7 +145,23 @@ welche Repositories er tatsächlich berührt hat, baut genau diese ein zweites M
 einen zweiten Eingang davor.
 
 ```bash
-cd ~/stromentlastung/stromentlastung-platform
+cd ~/stromentlastung/stromentlastung-demo
+STROMENTLASTUNG_HEUTE=2026-09-08 ./scripts/demo.sh up STROM-4
+```
+
+Der feste Tag ist kein Schmuck. Ein Säumniszuschlag zählt die angefangenen Monate seit der
+Fälligkeit; ohne festen Tag rechnen beide Welten mit dem Datum der Vorführung und zeigen
+andere Beträge als das Ticket, das Lösungskonzept und diese Anleitung. Das Ticket nennt den
+8. September 2026, sechs angefangene Monate; die Dienste rechnen dann mit diesem Tag, in
+beiden Welten. Dasselbe gilt für jede Frist: ob eine Antragsfrist abgelaufen ist und ob eine
+Änderungsfrist noch läuft, entscheidet sich an demselben „heute".
+
+Die Variable ist nur der Vorrang. Ohne sie liest `demo.sh` die Datei
+[`stichtag`](../stichtag) und nimmt den Tag von dort; `up` schreibt in die Ausgabe, woher er
+stammt. Wer sie leert, bekommt die Systemuhr zurück und wird davor gewarnt. So kann ein Start
+den Tag nicht mehr vergessen:
+
+```bash
 ./scripts/demo.sh up STROM-4
 ```
 
@@ -422,6 +438,22 @@ beschreibt.
 ---
 
 ## 10 · Wenn etwas schiefgeht
+
+**Ein Lauf endet bei verify „partial", die Auslieferung ist blockiert.** Im Protokoll steht
+für jeden Dienst `already answers at http://localhost:809x — not started, the verdict is
+blocked`. Die Welten dieser Vorführung belegen dieselben Ports, die verify für seinen
+eigenen Stapel braucht, und verify urteilt nicht über fremde Dienste — sonst prüfte es die
+Vorführung statt den Branch. Vor einem Lauf, der bis zur Auslieferung gehen soll, die Welten
+herunterfahren und danach wieder hochfahren; die Datenbanken bleiben erhalten:
+
+```bash
+./scripts/demo.sh down
+# … Lauf …
+./scripts/demo.sh up STROM-4
+```
+
+Eine reine Wiederverwendung — die Vorführung selbst — rechnet nichts und startet keinen
+Stapel; dort stört die laufende Welt nicht.
 
 **Eine Seite antwortet mit 502.** Ein Dienst wurde neu gestartet. Beide Eingänge schlagen
 ihre Ziele bei jeder Anfrage neu nach, das sollte also nicht vorkommen; wenn doch:

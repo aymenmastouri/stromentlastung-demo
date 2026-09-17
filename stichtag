@@ -1,0 +1,12 @@
+# Der Tag, an dem beide Welten rechnen. `demo.sh up` liest ihn, wenn
+# STROMENTLASTUNG_HEUTE nicht gesetzt ist; die Umgebung hat immer Vorrang.
+#
+# Warum es ihn gibt: der Säumniszuschlag wächst mit jedem angefangenen Monat
+# seit der Fälligkeit, und ob eine Frist abgelaufen ist, entscheidet sich am
+# selben „heute". Ohne festen Tag zeigt die Anwendung an jedem Vorführungstag
+# andere Beträge und andere Fristzustände als das Ticket, das sie vorführt.
+#
+# Dieser Tag ist der, den das Ticket nennt. Ändert sich der vorgeführte Fall,
+# ändert sich diese Zeile mit ihm — sonst nie.
+
+2026-09-08

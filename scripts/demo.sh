@@ -8,6 +8,14 @@
 #   demo.sh down                 stop both worlds, keep the databases
 #   demo.sh reset                stop both worlds and drop the databases; the next start seeds again
 #
+#   STROMENTLASTUNG_HEUTE=YYYY-MM-DD demo.sh up <TICKET>
+#                                pin the day the services calculate with, in both worlds. A
+#                                surcharge counts the months begun since the due date, so an
+#                                amount named in a ticket or a script holds only for a fixed day.
+#                                Without the variable the file `stichtag` beside this folder
+#                                decides, so a start cannot forget the day; an empty or absent
+#                                file leaves the services on the system clock, and `up` says so.
+#
 # A ticket id is expanded to `codegen/<TICKET>`. The branch is taken from `origin`; if it
 # has not been delivered yet, the pipeline clone under the SDLC Pilot cache is used as a
 # fallback and the run says so.
@@ -24,6 +32,9 @@ CLONE="${SDLCPILOT_CACHE:-$HOME/sdlcpilot/.cache/repos/stromentlastung}"
 PROJECT=stromentlastung
 MAIN_PORT=${STROMENTLASTUNG_GATEWAY_PORT:-8090}
 FIXED_PORT=${STROMENTLASTUNG_FIXED_PORT:-8095}
+HEUTE=${STROMENTLASTUNG_HEUTE:-}
+STICHTAG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/stichtag"
+HERKUNFT=""
 OVERRIDE="$PLATFORM/docker-compose.demo.yml"
 NGINX_FIXED="$PLATFORM/gateway/nginx-fixed.conf"
 
@@ -36,6 +47,22 @@ say()  { printf '\033[0;36m%s\033[0m\n' "$*"; }
 ok()   { printf '  \033[0;32m%s\033[0m\n' "$*"; }
 warn() { printf '  \033[0;33m%s\033[0m\n' "$*"; }
 die()  { printf '  \033[0;31m%s\033[0m\n' "$*"; exit 1; }
+
+# The day both worlds calculate with. The environment wins; without it the file
+# `stichtag` beside this demonstration decides. A surcharge that counts the
+# months begun since a due date is only reproducible on a fixed day, so a start
+# that forgets the day shows other amounts than the ticket it demonstrates —
+# and nothing on the screen says so. The file removes that from the operator's
+# memory; an empty or absent file keeps the system clock, as before.
+if [ -n "$HEUTE" ]; then
+  HERKUNFT="STROMENTLASTUNG_HEUTE"
+elif [ -f "$STICHTAG" ]; then
+  HEUTE="$(sed -e 's/#.*//' -e 's/[[:space:]]//g' "$STICHTAG" | grep -m1 . || true)"
+  [ -n "$HEUTE" ] && HERKUNFT="stichtag"
+fi
+if [ -n "$HEUTE" ] && ! printf '%s' "$HEUTE" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'; then
+  die "day of calculation '$HEUTE' from $HERKUNFT is not a date of the form YYYY-MM-DD"
+fi
 
 compose() {
   if [ -f "$OVERRIDE" ]; then
@@ -125,6 +152,12 @@ cmd_up() {
   compose --profile fixed up -d --build
   wait_ready
   say "Ready"
+  if [ -n "$HEUTE" ]; then
+    ok "day of calculation pinned to $HEUTE in both worlds (from $HERKUNFT)"
+  else
+    warn "no day of calculation pinned — both worlds count from the system clock, so"
+    warn "every amount that depends on a deadline differs from a ticket written for a fixed day"
+  fi
   ok "before:  http://localhost:$MAIN_PORT"
   ok "fixed:   http://localhost:$FIXED_PORT   (${changed[*]})"
   for repo in "${changed[@]}"; do
@@ -160,6 +193,7 @@ generate_override() {
         echo "      STROMENTLASTUNG_ISSUER: http://localhost:9091/realms/stromentlastung"
         echo "      STROMENTLASTUNG_JWKS_URI: http://keycloak:8080/realms/stromentlastung/protocol/openid-connect/certs"
         echo "      STROMENTLASTUNG_H2_CONSOLE_REMOTE: \"true\""
+        if [ -n "$HEUTE" ]; then echo "      STROMENTLASTUNG_HEUTE: \"$HEUTE\""; fi
         for dep in unternehmen bescheid zahlung; do
           local host=$dep
           [[ " ${changed[*]} " == *" $dep "* ]] && host="${dep}-fixed"
@@ -167,6 +201,15 @@ generate_override() {
         done
       fi
     done
+    if [ -n "$HEUTE" ]; then
+      # The main world calculates with the same fixed day; otherwise the two worlds would
+      # differ in the months counted, not only in the rule under comparison.
+      for repo in unternehmen antrag bescheid zahlung; do
+        echo "  $repo:"
+        echo "    environment:"
+        echo "      STROMENTLASTUNG_HEUTE: \"$HEUTE\""
+      done
+    fi
     echo "  gateway-fixed:"
     echo "    profiles: [fixed]"
     echo "    image: nginx:1.27-alpine"
