@@ -38,6 +38,7 @@ Desktop-Anwendung.
 | Variable | Bedeutung | Vorgabe |
 | --- | --- | --- |
 | `MODUS` | `trockenlauf` oder `aufnahme` (siehe unten) | `trockenlauf` |
+| `SPRACHE` | `de` oder `en`: Karten, Untertitel und die Oberfläche von SDLC Pilot in dieser Sprache; die Fachanwendung bleibt deutsch | `de` |
 | `SDLC_URL` | Oberfläche von SDLC Pilot, der App-Server der Desktop-Anwendung | keine; `lsof -nP -iTCP -sTCP:LISTEN \| grep '^SDLC'` nennt den Port |
 | `SDLC_API` | Backend für die Statusabfragen | `http://127.0.0.1:8000` |
 | `FACH_MAIN` | Fachanwendung auf `main` | `http://localhost:8090` |
@@ -136,9 +137,25 @@ tragen, in Drehbuch-Reihenfolge aneinandergeschnitten. Kürzungen innerhalb eine
 `OFFSET=0.3` verschiebt die Kapitelmarken um Sekunden, falls Video und Zeitachse gegeneinander
 versetzt sind; `CRF=18` hebt die Qualität.
 
+## Zwei Sprachen
+
+`SPRACHE=en` nimmt die englische Tabelle aus `texte.en.ts`, stellt die Oberfläche von SDLC Pilot
+auf Englisch und beschriftet die Karten mit *Act* und *Chapter*. Die Fachanwendung, ihre Beträge
+und das Ticket bleiben deutsch: Das Verfahren ist ein deutsches Verfahren, und die Untertitel
+tragen die Bedeutung. Beide Tabellen haben dieselben Kapitel und Schlüssel; `npm run typen`
+schlägt fehl, wenn einer Sprache ein Kapitel fehlt. Die englische Tabelle ist eine Übersetzung
+des freigegebenen deutschen Wortlauts; eine Änderung am Wortlaut geschieht in beiden Dateien.
+
+```bash
+MODUS=aufnahme SPRACHE=en SDLC_URL=http://127.0.0.1:61972 npx playwright test
+```
+
+Der Schnitt schreibt beide Fassungen nach `out/`; wer beide Sprachen behalten will, benennt
+`langfassung.mp4` und `kurzfassung.mp4` nach jedem Schnitt um (etwa `langfassung-en.mp4`).
+
 ## Text für den Vorführenden
 
-`npm run texte` erzeugt `texte.md` aus `texte.ts`: der vollständige Wortlaut aller Karten
+`npm run texte` erzeugt `texte.md` aus `texte.ts` und `texte.en.md` aus `texte.en.ts`: der vollständige Wortlaut aller Karten
 und Untertitel, Kapitel für Kapitel, mit der Markierung für die Kurzfassung. Video und
 Dokument können nicht auseinanderlaufen, weil beide aus derselben Tabelle kommen.
 

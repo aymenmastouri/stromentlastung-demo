@@ -1,6 +1,6 @@
 # Der Text des Videos
 
-Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus `texte.ts` am 17. September 2026.
+Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus `texte.ts` am 25. September 2026.
 Was hier steht, steht so im Video; eine Änderung am Wortlaut geschieht in `texte.ts`,
 danach erzeugt `npm run texte` dieses Dokument neu.
 

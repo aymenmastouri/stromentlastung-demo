@@ -8,10 +8,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { AKTE, KAPITEL, TITEL } from './texte.ts';
+import { AKTE, KAPITEL, SPRACHE, TITEL } from './texte.ts';
 
 const hier = path.dirname(fileURLToPath(import.meta.url));
-const ziel = path.join(hier, 'texte.md');
+// Mit SPRACHE=en entsteht texte.en.md aus texte.en.ts, sonst texte.md.
+const datei = SPRACHE === 'en' ? 'texte.en.md' : 'texte.md';
+const ziel = path.join(hier, datei);
 
 const heute = new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 const zeilen = [];
@@ -19,6 +21,10 @@ const z = (s = '') => zeilen.push(s);
 
 z('# Der Text des Videos');
 z();
+if (SPRACHE === 'en') {
+  z('> Englische Fassung: Übersetzung des freigegebenen deutschen Wortlauts aus `texte.en.ts`, zur Freigabe.');
+  z();
+}
 z(`Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus \`texte.ts\` am ${heute}.`);
 z('Was hier steht, steht so im Video; eine Änderung am Wortlaut geschieht in `texte.ts`,');
 z('danach erzeugt `npm run texte` dieses Dokument neu.');
@@ -70,4 +76,4 @@ for (const [id, k] of Object.entries(KAPITEL)) {
 }
 
 fs.writeFileSync(ziel, zeilen.join('\n') + '\n', 'utf8');
-console.log(`texte.md geschrieben: ${Object.keys(KAPITEL).length} Kapitel`);
+console.log(`${datei} geschrieben: ${Object.keys(KAPITEL).length} Kapitel`);

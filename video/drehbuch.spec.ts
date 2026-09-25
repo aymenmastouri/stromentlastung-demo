@@ -3,7 +3,10 @@ import fs from "node:fs";
 import path from "node:path";
 
 import * as ov from "./overlays";
-import { AKTE, KAPITEL, TITEL, karte, text, type KapitelId } from "./texte";
+import { AKTE, KAPITEL, SPRACHE, TITEL, karte, text, type KapitelId } from "./texte";
+
+/** Eine Beschriftung der Oberfläche von SDLC Pilot in der Sprache der Aufnahme. */
+const L = (de: string, en: string): string => (SPRACHE === "en" ? en : de);
 import { Zeitachse } from "./timeline";
 
 /**
@@ -438,9 +441,9 @@ async function stelle(
 
 type Stufe = "concept" | "plan" | "delivery";
 const STUFE: Record<Stufe, { name: string; gibtFrei: string }> = {
-  concept: { name: "Konzept", gibtFrei: "plan" },
+  concept: { name: L("Konzept", "Concept"), gibtFrei: "plan" },
   plan: { name: "Plan", gibtFrei: "implement" },
-  delivery: { name: "Lieferung", gibtFrei: "deliver" },
+  delivery: { name: L("Lieferung", "Delivery"), gibtFrei: "deliver" },
 };
 
 /** Seite Entscheidungen, Stufe öffnen, Zustand lesen und rahmen. */
@@ -503,7 +506,7 @@ async function freigeben(ctx: Ctx, stufe: Stufe): Promise<boolean> {
   // die Lieferung wurde freigegeben, der Spec wartete auf die Meldung und setzte nicht fort).
   const meldung = page
     .locator(".message")
-    .filter({ hasText: /Freigegeben/ })
+    .filter({ hasText: /Freigegeben|Released/ })
     .first();
   const stage = page
     .locator(".stage")
@@ -528,7 +531,7 @@ async function freigeben(ctx: Ctx, stufe: Stufe): Promise<boolean> {
         .textContent()
         .catch(() => "")) || ""
     ).trim();
-    if (/freigegeben|ausgeführt/i.test(zustand)) {
+    if (/freigegeben|ausgeführt|released|delivered/i.test(zustand)) {
       ok = true;
       wie = `Zustand „${zustand}“`;
       break;
@@ -941,11 +944,11 @@ async function k7(ctx: Ctx): Promise<void> {
     ".configuration-workbench",
   );
   await ctx.page
-    .getByText("Ausführungsplattform")
+    .getByText(L("Ausführungsplattform", "Execution platform"))
     .first()
     .waitFor({ state: "visible", timeout: 20_000 })
     .catch(() => {});
-  await feld(ctx, "Plattform-Modus");
+  await feld(ctx, L("Plattform-Modus", "Platform mode"));
   await untertitel(ctx, "K7", "a");
   await schnappschuss(ctx, "k7-plattform");
   await ov.rahmenWeg(ctx.page);
@@ -954,7 +957,7 @@ async function k7(ctx: Ctx): Promise<void> {
     "/codegen/settings?section=behavior",
     ".configuration-workbench",
   );
-  await feld(ctx, "Wiederverwendung fertiger Arbeit");
+  await feld(ctx, L("Wiederverwendung fertiger Arbeit", "Reuse of finished work"));
   await untertitel(ctx, "K7", "b");
   await schnappschuss(ctx, "k7-wiederverwendung");
 }
@@ -994,7 +997,7 @@ async function k8(ctx: Ctx): Promise<void> {
   await untertitel(ctx, "K8", "a", 7_000);
   await ov.rahmenWeg(page);
   const erzeugen = page
-    .getByRole("button", { name: /Lösungskonzept erzeugen/ })
+    .getByRole("button", { name: /Lösungskonzept erzeugen|Generate Solution Concept/i })
     .first();
   if (await erzeugen.isVisible().catch(() => false)) {
     // Gezeigt, nicht gedrückt. Ein hier erzeugtes Konzept nähme der Triage
@@ -1009,7 +1012,7 @@ async function k8(ctx: Ctx): Promise<void> {
     ctx.z.notiz("Knopf „Lösungskonzept erzeugen“ nicht sichtbar");
   }
   const verwenden = page
-    .getByRole("button", { name: /In Pipeline verwenden/ })
+    .getByRole("button", { name: /In Pipeline verwenden|Use in pipeline/i })
     .first();
   await insBild(ctx, verwenden, "center");
   await ov.rahmen(page, verwenden, { rand: 10 });
@@ -1043,7 +1046,7 @@ async function k9(ctx: Ctx): Promise<void> {
 
   const laufsets = page
     .locator(".mode-tab")
-    .filter({ hasText: /Laufsets/ })
+    .filter({ hasText: /Laufsets|Run Sets/i })
     .first();
   if (await laufsets.isVisible().catch(() => false)) await laufsets.click();
   await warte(page, 600);
@@ -1663,15 +1666,16 @@ test.describe("Drehbuch", () => {
     const z = new Zeitachse(ZEITACHSE, MODUS);
     const ctx: Ctx = { page, z, bildNr: 0 };
 
-    // Deutsche Oberfläche in beiden Anwendungen, unabhängig von der Sprache des Rechners.
-    await page.addInitScript(() => {
+    // Die Oberfläche von SDLC Pilot in der Sprache der Aufnahme, die Fachanwendung deutsch,
+    // unabhängig von der Sprache des Rechners.
+    await page.addInitScript((sprache: string) => {
       try {
-        localStorage.setItem("sdlcpilot.ui-language", "de-DE");
+        localStorage.setItem("sdlcpilot.ui-language", sprache);
         localStorage.setItem("stromentlastung.lang", "de");
       } catch {
         /* fremde Ursprünge ohne Speicher */
       }
-    });
+    }, SPRACHE === "en" ? "en-US" : "de-DE");
 
     const gesundheit = await api<{ version?: string; build?: string }>(
       ctx,

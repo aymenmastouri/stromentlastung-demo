@@ -21,19 +21,28 @@ export interface Kapitel {
   text: Readonly<Record<string, string>>;
 }
 
-export const AKTE: Readonly<Record<Akt, string>> = {
+import { AKTE_EN, KAPITEL_EN, TITEL_EN } from "./texte.en.ts";
+
+/**
+ * Die Sprache der Aufnahme: `SPRACHE=en` nimmt die englische Tabelle aus
+ * texte.en.ts und stellt die Oberfläche von SDLC Pilot auf Englisch; ohne
+ * Angabe Deutsch. Die Fachanwendung bleibt in beiden Fassungen deutsch.
+ */
+export const SPRACHE: "de" | "en" = process.env.SPRACHE === "en" ? "en" : "de";
+
+const AKTE_DE: Readonly<Record<Akt, string>> = {
   1: "Der Auftrag",
   2: "Der Lauf",
   3: "Das Ergebnis",
 };
 
 /** Die Botschaft, Titel der Folie. */
-export const TITEL = {
+const TITEL_DE = {
   haupt: "Von der Anforderung bis zur Auslieferung",
   neben: "ein durchgängiger, gesteuerter, nachweisbarer Prozess.",
 } as const;
 
-export const KAPITEL = {
+const KAPITEL_DE = {
   K1: {
     nr: 1,
     akt: 1,
@@ -260,7 +269,15 @@ export const KAPITEL = {
   },
 } as const satisfies Record<string, Kapitel>;
 
-export type KapitelId = keyof typeof KAPITEL;
+/** Beide Tabellen tragen dieselben Kapitel; der Typ schlägt fehl, wenn eines fehlt. */
+const _gleicheKapitel: Record<keyof typeof KAPITEL_DE, Kapitel> = KAPITEL_EN;
+void _gleicheKapitel;
+
+export const AKTE: Readonly<Record<Akt, string>> = SPRACHE === "en" ? AKTE_EN : AKTE_DE;
+export const TITEL: { readonly haupt: string; readonly neben: string } = SPRACHE === "en" ? TITEL_EN : TITEL_DE;
+export const KAPITEL: Readonly<Record<keyof typeof KAPITEL_DE, Kapitel>> = SPRACHE === "en" ? KAPITEL_EN : KAPITEL_DE;
+
+export type KapitelId = keyof typeof KAPITEL_DE;
 
 /** Ein Untertitel des Drehbuchs; ein fehlender Schlüssel ist ein Fehler im Spec, kein leerer Text. */
 export function text(id: KapitelId, key: string): string {

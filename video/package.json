@@ -7,7 +7,7 @@
     "install-browser": "playwright install chromium",
     "trockenlauf": "MODUS=trockenlauf playwright test",
     "aufnahme": "MODUS=aufnahme playwright test",
-    "texte": "node --experimental-strip-types --no-warnings texte-md.mjs",
+    "texte": "node --experimental-strip-types --no-warnings texte-md.mjs && SPRACHE=en node --experimental-strip-types --no-warnings texte-md.mjs",
     "schnitt": "./schnitt.sh",
     "typen": "tsc --noEmit"
   },

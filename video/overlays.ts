@@ -1,5 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 
+import { SPRACHE } from './texte';
+
+/** Die Wörter der Karten selbst, in der Sprache der Aufnahme. */
+const WORT = SPRACHE === 'en' ? { akt: 'Act', kapitel: 'Chapter' } : { akt: 'Akt', kapitel: 'Kapitel' };
+
 /**
  * Einblendungen für die Aufnahme: Titel- und Kapitelkarten, Untertitel,
  * Kapitel-Marke, Rahmen und Zoom.
@@ -103,7 +108,7 @@ export async function titelkarte(
 export async function aktkarte(page: Page, nr: number, titel: string, ms = 4_000): Promise<void> {
   await karteEinblenden(
     page,
-    `<div style="${KICKER}">Akt ${nr}</div>
+    `<div style="${KICKER}">${WORT.akt} ${nr}</div>
      <div style="font-size:70px;font-weight:700;letter-spacing:-1px">${escape(titel)}</div>`,
   );
   await pause(page, ms);
@@ -123,7 +128,7 @@ export async function kapitelkarte(
     .join('');
   await karteEinblenden(
     page,
-    `<div style="${KICKER}">Kapitel ${nr}</div>
+    `<div style="${KICKER}">${WORT.kapitel} ${nr}</div>
      <div style="font-size:52px;font-weight:700;margin-bottom:44px">${escape(titel)}</div>
      <div style="max-width:1400px;color:rgba(255,255,255,.92)">${absaetze}</div>`,
   );
