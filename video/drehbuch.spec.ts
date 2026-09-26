@@ -1204,31 +1204,111 @@ async function dossierKapitel(
   await schnappschuss(ctx, bild);
 }
 
+/** Einem Link der Oberfläche folgen: klicken, auf die Zielseite warten, die Kapitel-Marke erneuern. */
+async function folge(ctx: Ctx, link: Locator, bereit: string): Promise<boolean> {
+  if (!(await link.isVisible().catch(() => false))) return false;
+  await link.click();
+  await ctx.page
+    .locator(bereit)
+    .first()
+    .waitFor({ state: "visible", timeout: 20_000 })
+    .catch(() => {});
+  await warte(ctx.page, 1_500);
+  await ov.markeErneuern(ctx.page);
+  return true;
+}
+
 async function k11(ctx: Ctx): Promise<void> {
   const page = ctx.page;
-  // Architekturfakten: Bericht, Beleg-Seite, zurück.
-  if (await bericht(ctx, "extract")) await warte(page, 2_000);
-  await app(ctx, "/codegen/extract", ".verdict, .page-title");
-  await ov.rahmen(page, page.locator(".verdict").first(), { rand: 8 });
-  await untertitel(ctx, "K11", "a");
-  await ov.rahmenWeg(page);
-  await rollen(ctx, 650, 2_200);
-  await warte(page, 1_500);
-  await schnappschuss(ctx, "k11-architekturfakten");
-  await bericht(ctx, "extract");
-  await warte(page, 1_500);
+  // Vom Lauf in den Bericht: die Phase im Stepper ist ein Link zu ihrem Bericht.
+  if (!/\/codegen\/run/.test(page.url())) await app(ctx, "/codegen/run", ".page-title");
+  const schritt = page
+    .locator("app-pipeline-stepper .step-link")
+    .filter({ hasText: /Architekturfakten|Architecture Facts/i })
+    .first();
+  if (await schritt.isVisible().catch(() => false)) {
+    await insBild(ctx, page.locator("app-pipeline-stepper").first(), "center");
+    await ov.rahmen(page, schritt, { spot: true, rand: 10 });
+    await untertitel(ctx, "K11", "s");
+    await ov.rahmenWeg(page);
+    await folge(ctx, schritt, ".report-pane .report");
+  } else {
+    ctx.z.notiz("Stepper ohne Links — Bericht über die Seite Berichte");
+    await bericht(ctx, "extract");
+  }
 
-  // Architektursynthese: Bericht, Beleg-Seite, zurück.
-  if (await bericht(ctx, "analyze")) await warte(page, 1_500);
-  await app(ctx, "/codegen/analyze", ".thesis-card, .page-title");
-  await ov.rahmen(page, page.locator(".thesis-card").first(), { rand: 8 });
+  // Architekturfakten: die Zahl im Bericht führt zu den Fakten selbst.
+  const zahl = page.locator("app-key-value-table app-report-link a").first();
+  if (await zahl.isVisible().catch(() => false)) {
+    await insBild(ctx, zahl, "center");
+    await ov.rahmen(page, zahl, { spot: true, rand: 10 });
+    await warte(page, 2_500);
+    await ov.rahmenWeg(page);
+    await folge(ctx, zahl, ".drilldown, .verdict, .page-title");
+    await warte(page, 2_000);
+    const liste = page.locator(".drilldown, app-extract-drilldown").first();
+    if (await liste.isVisible().catch(() => false)) {
+      await insBild(ctx, liste, "start");
+      await ov.rahmen(page, liste, { rand: 8 });
+    }
+    await untertitel(ctx, "K11", "a");
+    await ov.rahmenWeg(page);
+    await schnappschuss(ctx, "k11-architekturfakten");
+    // Der Weg zurück: die Seite kennt den Bericht, aus dem sie geöffnet wurde.
+    const zurueck = page.locator("app-report-backlink button, app-report-backlink a").first();
+    await rollen(ctx, -20_000, 1_200);
+    if (await zurueck.isVisible().catch(() => false)) {
+      await ov.rahmen(page, zurueck, { spot: true, rand: 8 });
+      await warte(page, 2_000);
+      await ov.rahmenWeg(page);
+      await folge(ctx, zurueck, ".report-pane .report");
+    }
+  } else {
+    ctx.z.notiz("Bericht Architekturfakten ohne Zahl-Link");
+    await untertitel(ctx, "K11", "a");
+  }
+
+  // Architektursynthese: der Knopf im Kopf des Berichts öffnet die Seite.
+  if (await bericht(ctx, "analyze")) {
+    const oeffnen = page.locator(".phase-link a").first();
+    await ov.rahmen(page, oeffnen, { spot: true, rand: 8 });
+    await warte(page, 2_000);
+    await ov.rahmenWeg(page);
+    if (!(await folge(ctx, oeffnen, ".thesis-card"))) await app(ctx, "/codegen/analyze", ".thesis-card");
+  } else {
+    await app(ctx, "/codegen/analyze", ".thesis-card");
+  }
+  const blick = page.locator("app-analyze-summary").first();
+  await insBild(ctx, blick, "start");
+  await ov.rahmen(page, blick, { rand: 8 });
   await untertitel(ctx, "K11", "b");
   await ov.rahmenWeg(page);
-  await rollen(ctx, 700, 2_200);
-  await warte(page, 1_500);
   await schnappschuss(ctx, "k11-architektursynthese");
-  await bericht(ctx, "analyze");
-  await warte(page, 1_500);
+
+  // Woher die Aussagen kommen: abgelesen oder gefolgert, erklärt am Ort.
+  const herkunft = page.locator("app-analyze-ledger").first();
+  if (await herkunft.isVisible().catch(() => false)) {
+    await insBild(ctx, herkunft, "center");
+    await ov.rahmen(page, herkunft, { rand: 8 });
+    await untertitel(ctx, "K11", "b2");
+    await ov.rahmenWeg(page);
+    await schnappschuss(ctx, "k11-herkunft");
+  }
+
+  // Ein Muster aufklappen: die Stellen im Code, an denen es belegt ist.
+  const ebene = page.locator("app-analyze-patterns .layer-box:not([disabled])").first();
+  if (await ebene.isVisible().catch(() => false)) {
+    await insBild(ctx, ebene, "start");
+    await ebene.click();
+    await warte(page, 1_200);
+    const stellen = page.locator("app-analyze-patterns app-analyze-evidence").first();
+    await ov.rahmen(page, stellen, { rand: 8 });
+    await untertitel(ctx, "K11", "b3");
+    await ov.rahmenWeg(page);
+    await schnappschuss(ctx, "k11-muster-stellen");
+  } else {
+    ctx.z.notiz("keine aufklappbare Muster-Ebene");
+  }
 
   // Architekturdossier: im Bericht, und drei Kapitel im Durchlauf — ein C4-Dokument
   // ganz, dann die Bausteinsicht und die Laufzeitsicht aus arc42. Ein Dossier, das
@@ -1238,7 +1318,7 @@ async function k11(ctx: Ctx): Promise<void> {
   // drei gelesen, damit niemand die drei für das ganze Dossier hält.
   // Eine schlichte Abschnittsüberschrift trägt Leerraum um ihren Text; ein
   // verankertes Muster fand sie nicht und der Kopf blieb ungerahmt.
-  const dossierKopf = await abschnitt(ctx, /^\s*Dossier\s*$/i);
+  const dossierKopf = await abschnitt(ctx, /^\s*Dossier\b/i);
   await ov.rahmen(page, dossierKopf ?? page.locator(".report-head").first(), {
     rand: 8,
   });
@@ -1484,7 +1564,19 @@ async function k17(ctx: Ctx): Promise<void> {
 
 async function k18(ctx: Ctx): Promise<void> {
   const page = ctx.page;
-  await app(ctx, "/codegen/changes", ".pack-head, .empty");
+  // Vom Bericht der Umsetzung zur Änderung: die Datei im Bericht führt zu ihrem Diff.
+  let gefolgt = false;
+  if (await bericht(ctx, "implement")) {
+    const datei = page.locator("app-report-table .link-cell a").first();
+    if (await datei.isVisible().catch(() => false)) {
+      await insBild(ctx, datei, "center");
+      await ov.rahmen(page, datei, { spot: true, rand: 10 });
+      await untertitel(ctx, "K18", "v");
+      await ov.rahmenWeg(page);
+      gefolgt = await folge(ctx, datei, ".pack-head, .empty");
+    }
+  }
+  if (!gefolgt) await app(ctx, "/codegen/changes", ".pack-head, .empty");
   const koepfe = page.locator(".file-head");
   const n = await koepfe.count();
   if (!n) throw new Error("Seite Änderungen zeigt keine Dateien");

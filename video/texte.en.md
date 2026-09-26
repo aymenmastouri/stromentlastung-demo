@@ -2,7 +2,7 @@
 
 > Englische Fassung: Übersetzung des freigegebenen deutschen Wortlauts aus `texte.en.ts`, zur Freigabe.
 
-Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus `texte.ts` am 25. September 2026.
+Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus `texte.ts` am 26. September 2026.
 Was hier steht, steht so im Video; eine Änderung am Wortlaut geschieht in `texte.ts`,
 danach erzeugt `npm run texte` dieses Dokument neu.
 
@@ -49,7 +49,7 @@ The reference procedure is rebuilt and simplified: created by AI from public sou
 
 ### K3 · Sign-in and cases
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -97,7 +97,7 @@ What it says: an amount and a rule. What it does not say: where the defect is an
 
 ### K7 · Settings
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -109,7 +109,7 @@ Reuse of finished work: work whose inputs have not changed since the last run is
 
 ### K8 · The ticket in the tool
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -129,7 +129,7 @@ Before the run: seven repositories on main, each at its commit. Model services a
 
 ### K10 · The knowledge stands
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -145,25 +145,37 @@ What has not changed is not computed again. When the code base changes, the tool
 
 **Untertitel 1**
 
-Architecture facts: read from the code without AI. Every relation with file and line.
+Every phase in the run opens its report — and every report the page that shows the result in full.
 
 **Untertitel 2**
 
-Architecture synthesis: the AI explains the code base, checked against the facts. Where the facts are silent, it says so.
+Architecture facts: read from the code without AI. The number in the report leads to the facts themselves — every component with file and line.
 
 **Untertitel 3**
 
-Architecture dossier: sixteen chapters — C4 levels 1 to 4 and arc42 §1 to §12 —, each with evidence and scored by a separate reviewer. The AI writes. Review is separate. Three chapters are shown here as examples.
+Architecture synthesis: the AI explains the code base, checked against the facts. Where the facts are silent, it says so.
 
 **Untertitel 4**
 
-C4, level 1: the system context. Who talks to the procedure, what it needs from outside — a whole document, not a slide.
+Every statement says where it comes from: read from the code by a tool, or inferred by the AI — and how sure the analysis is.
 
 **Untertitel 5**
 
-arc42, building block view: which services the procedure consists of and how they fit together. Read from the code, not from yesterday's drawing.
+A pattern is not a claim: unfolded, it shows the places in the code that prove it.
 
 **Untertitel 6**
+
+Architecture dossier: sixteen chapters — C4 levels 1 to 4 and arc42 §1 to §12 —, each with evidence and scored by a separate reviewer. The AI writes. Review is separate. Three chapters are shown here as examples.
+
+**Untertitel 7**
+
+C4, level 1: the system context. Who talks to the procedure, what it needs from outside — a whole document, not a slide.
+
+**Untertitel 8**
+
+arc42, building block view: which services the procedure consists of and how they fit together. Read from the code, not from yesterday's drawing.
+
+**Untertitel 9**
 
 arc42, runtime view: how a case runs through the services. On this understanding, triage is about to look for the cause.
 
@@ -209,7 +221,7 @@ Continue chain: the phases before stand, the plan is taken over. What is decided
 
 ### K14 · Delivery plan and waiting point 2
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -217,7 +229,7 @@ The plan names the places, the order and the tests. A second decision, before an
 
 ### K15 · Controlled execution
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -225,7 +237,7 @@ Agents act — the execution proves. The agent wrote on a branch in a fenced wor
 
 ### K16 · Validation gate
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -251,13 +263,17 @@ Delivery readiness: the branch is on origin, the pull request is prepared. Nine 
 
 *Kurzfassung: ja*
 
-**Untertitel**
+**Untertitel 1**
+
+From the report straight to the change: every file of the implementation leads to its diff.
+
+**Untertitel 2**
 
 The result is not a chat. It is a branch with diff, tests and report: readable in the tool, continued in the editor.
 
 ### K19 · GitHub
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -265,7 +281,7 @@ On origin: two files in the collection service, one test in the test suite. Trac
 
 ### K20 · History
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 

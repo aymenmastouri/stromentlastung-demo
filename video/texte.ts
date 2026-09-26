@@ -70,7 +70,7 @@ const KAPITEL_DE = {
     nr: 3,
     akt: 1,
     titel: "Anmeldung und Vorgänge",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Die Sachbearbeitung der Dienststelle meldet sich an. Das Kopfband nennt den Stand, auf dem die Dienste laufen: main.",
       b: "Die Dienststelle führt ihre Vorgänge in einer Liste: Aktenzeichen, Unternehmen, Entnahmejahr, Zustand und festgesetzter Betrag, filterbar nach Zustand. Der Fall von gleich ist einer von vielen.",
@@ -109,7 +109,7 @@ const KAPITEL_DE = {
     nr: 7,
     akt: 2,
     titel: "Einstellungen",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Eigene Daten. Eigene Regeln. Eigene KI. Der Plattform-Modus wird einmal am Start des Laufs entschieden: SovAI, die souveräne Plattform von Capgemini. Offline wäre die lokale Plattform auf diesem Rechner, mit denselben Regeln.",
       b: "Wiederverwendung fertiger Arbeit: Arbeit, deren Eingaben seit dem letzten Lauf unverändert sind, wird übernommen und nicht neu gerechnet. Der Lauf gleich zeigt, was das heißt.",
@@ -119,7 +119,7 @@ const KAPITEL_DE = {
     nr: 8,
     akt: 2,
     titel: "Das Ticket im Werkzeug",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Das Ticket kommt live aus Jira, mit seinen Verknüpfungen. Von hier ließe sich direkt ein erstes Lösungskonzept aus dem Bestand entwerfen — das überlassen wir gleich der Pipeline.",
       b: "In Pipeline verwenden: Das Ticket ist jetzt die Aufgabe des Laufs. Eine Aufgabe, ein Lauf, nichts parallel.",
@@ -138,7 +138,7 @@ const KAPITEL_DE = {
     nr: 10,
     akt: 2,
     titel: "Das Wissen steht",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Zuerst die Fakten – ohne KI. Bestand, Fakten, Verständnis und Dossier stehen aus dem ersten Kontakt mit dem Code und werden übernommen.",
       b: "Was sich nicht geändert hat, wird nicht neu gerechnet. Ändert sich der Bestand, rechnet das Werkzeug genau das neu, und zu jedem Ergebnis steht, aus welchen Eingaben es stammt.",
@@ -150,8 +150,11 @@ const KAPITEL_DE = {
     titel: "Rundgang durch das Wissen",
     kurz: true,
     text: {
-      a: "Architekturfakten: ohne KI aus dem Code gelesen. Jede Beziehung mit Datei und Zeile.",
+      s: "Jede Phase im Lauf öffnet ihren Bericht – und jeder Bericht die Seite, die das Ergebnis ganz zeigt.",
+      a: "Architekturfakten: ohne KI aus dem Code gelesen. Die Zahl im Bericht führt zu den Fakten selbst – jede Komponente mit Datei und Zeile.",
       b: "Architektursynthese: Die KI erklärt den Bestand, geprüft gegen die Fakten. Wo die Fakten schweigen, sagt sie es.",
+      b2: "Jede Aussage sagt, woher sie kommt: von einem Werkzeug im Code abgelesen oder von der KI gefolgert – und wie sicher die Analyse ist.",
+      b3: "Ein Muster ist keine Behauptung: Aufgeklappt zeigt es die Stellen im Code, an denen es belegt ist.",
       c: "Architekturdossier: sechzehn Kapitel — C4 Ebene 1 bis 4 und arc42 §1 bis §12 —, jedes mit Belegen und von einem getrennten Prüfer bewertet. Die KI schreibt. Geprüft wird getrennt. Drei Kapitel stehen hier als Beispiel.",
       d: "C4, Ebene 1: der Systemkontext. Wer mit dem Verfahren spricht, was es von außen braucht — ein ganzes Dokument, nicht eine Folie.",
       e: "arc42, Bausteinsicht: aus welchen Diensten das Verfahren besteht und wie sie ineinandergreifen. Gelesen aus dem Code, nicht aus einer Zeichnung von gestern.",
@@ -186,7 +189,7 @@ const KAPITEL_DE = {
     nr: 14,
     akt: 2,
     titel: "Delivery Plan und Wartepunkt 2",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Der Plan nennt die Stellen, die Reihenfolge und die Tests. Zweite Entscheidung, bevor ein Agent Code schreibt.",
     },
@@ -195,7 +198,7 @@ const KAPITEL_DE = {
     nr: 15,
     akt: 2,
     titel: "Controlled Execution",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Agenten handeln – die Ausführung beweist. Der Agent hat auf einem Branch in einem eingezäunten Arbeitsbereich geschrieben: nur die geplanten Stellen, Build und Tests liefen mit. Der Bericht hält es fest.",
     },
@@ -204,7 +207,7 @@ const KAPITEL_DE = {
     nr: 16,
     akt: 2,
     titel: "Validation Gate",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Validation Gate: Nicht der Agent sagt, dass es geht. Die Tests liefen gegen die laufende Anwendung, der Lauf hat es gezeigt.",
     },
@@ -225,6 +228,7 @@ const KAPITEL_DE = {
     titel: "Änderungen",
     kurz: true,
     text: {
+      v: "Vom Bericht direkt zur Änderung: Jede Datei der Umsetzung führt zu ihrem Diff.",
       a: "Das Ergebnis ist kein Chat. Es ist ein Branch mit Diff, Tests und Bericht: im Werkzeug lesbar, im Editor weiterführbar.",
     },
   },
@@ -232,7 +236,7 @@ const KAPITEL_DE = {
     nr: 19,
     akt: 3,
     titel: "GitHub",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Auf origin: zwei Dateien im Erhebungsdienst, ein Test im Prüfpaket. Nachvollziehbar bis zur Zeile, prüfbar wie jede andere Änderung.",
     },
@@ -241,7 +245,7 @@ const KAPITEL_DE = {
     nr: 20,
     akt: 3,
     titel: "Verlauf",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Der Verlauf hält die Kette: jeder Lauf, jede Entscheidung, jede Dauer. Einmal gerechnet, heute in Sekunden übernommen.",
     },

@@ -138,18 +138,24 @@ Fakten, Verständnis und Dossier stehen aus dem ersten Kontakt mit dem Code und 
 sich der Bestand, rechnet das Werkzeug genau das neu, und zu jedem Ergebnis steht, aus
 welchen Eingaben es stammt.* Beleg: Zoom auf die Zeilen und den Log-Satz. Kurz: ja.
 
-**K11 · Rundgang durch das Wissen.** Muster: der Bericht der Phase auf der Seite
-Berichte; nur für Architekturfakten und Architektursynthese von dort der Sprung auf die
-Beleg-Seite der Phase, Erklärung, zurück zum Bericht. Bestand sichten hat keine eigene
-Seite und bekommt keinen Halt. Triage, Plan, Umsetzung, Prüfung und Lieferung bleiben auf
-der Seite Berichte; dort wird der wichtige Output gezeigt und erklärt.
+**K11 · Rundgang durch das Wissen.** Fassung 3 (26.09.2026): Der Rundgang folgt den Links
+des Werkzeugs statt dem Menü. Jeder Bericht führt zu der Seite, die sein Ergebnis ganz zeigt,
+und jede so geöffnete Seite führt zurück zum Bericht.
 
-- Berichte → Architekturfakten, dann die Seite *Architekturfakten*: Komponenten,
-  Aufrufe, Abhängigkeiten mit Datei und Zeile; zurück. *Architekturfakten: ohne KI aus
-  dem Code gelesen. Jede Beziehung mit Datei und Zeile.*
-- Berichte → Architektursynthese, dann die Seite *Architektursynthese*: Makro- und
-  Mikroarchitektur, Entscheidungstreiber, Konfidenz; zurück. *Architektursynthese: Die KI
-  erklärt den Bestand, geprüft gegen die Fakten. Wo die Fakten schweigen, sagt sie es.*
+- Run-Seite: Klick auf die Phase *Architekturfakten* im Stepper öffnet ihren Bericht.
+  *Jede Phase im Lauf öffnet ihren Bericht – und jeder Bericht die Seite, die das Ergebnis
+  ganz zeigt.*
+- Bericht Architekturfakten: Klick auf die Zahl der Komponenten öffnet die Seite
+  *Architekturfakten* mit der Liste der Komponenten, jede mit Datei und Zeile.
+  *Architekturfakten: ohne KI aus dem Code gelesen. Die Zahl im Bericht führt zu den Fakten
+  selbst – jede Komponente mit Datei und Zeile.* Dann *Zurück zum Bericht*.
+- Bericht Architektursynthese: der Knopf im Kopf öffnet die Seite *Architektursynthese*;
+  die Übersicht mit These und Kacheln. *Architektursynthese: Die KI erklärt den Bestand,
+  geprüft gegen die Fakten. Wo die Fakten schweigen, sagt sie es.* Danach der Block *Woher
+  die Aussagen kommen*: *Jede Aussage sagt, woher sie kommt: von einem Werkzeug im Code
+  abgelesen oder von der KI gefolgert – und wie sicher die Analyse ist.* Dann eine Ebene
+  des Musterstapels aufgeklappt: *Ein Muster ist keine Behauptung: Aufgeklappt zeigt es die
+  Stellen im Code, an denen es belegt ist.*
 - Berichte → Architekturdossier: zuerst der Kopf mit der Zahl der Kapitel und der
   Bewertung. *Architekturdossier: sechzehn Kapitel — C4 Ebene 1 bis 4 und arc42 §1 bis
   §12 —, jedes mit Belegen und von einem getrennten Prüfer bewertet. Die KI schreibt.
@@ -220,7 +226,7 @@ drei Entscheidungen, eine Kette, und nichts wurde zweimal gerechnet.* Kurz: ja.
 
 ### Akt 3 · Das Ergebnis
 
-**K18 · Änderungen.** Bild: Seite Änderungen: SaeumnisRechner.java geändert,
+**K18 · Änderungen.** Fassung 3: Der Weg führt über den Bericht der Umsetzung; der Link an der Datei öffnet ihren Diff. *Vom Bericht direkt zur Änderung: Jede Datei der Umsetzung führt zu ihrem Diff.* Bild: Seite Änderungen: SaeumnisRechner.java geändert,
 SaeumnisRechnerTest.java neu, ein e2e-Spec neu, je mit Phase und Diff; Zoom auf die
 Abrundung. Untertitel: *Das Ergebnis ist kein Chat. Es ist ein Branch mit Diff, Tests und
 Bericht: im Werkzeug lesbar, im Editor weiterführbar.* Kurz: ja.

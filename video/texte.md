@@ -1,6 +1,6 @@
 # Der Text des Videos
 
-Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus `texte.ts` am 25. September 2026.
+Wortlaut aller Karten und Untertitel, Kapitel für Kapitel, erzeugt aus `texte.ts` am 26. September 2026.
 Was hier steht, steht so im Video; eine Änderung am Wortlaut geschieht in `texte.ts`,
 danach erzeugt `npm run texte` dieses Dokument neu.
 
@@ -47,7 +47,7 @@ Das Referenzverfahren ist nachgebaut und vereinfacht: von KI allein aus öffentl
 
 ### K3 · Anmeldung und Vorgänge
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -95,7 +95,7 @@ Was hier steht: ein Betrag und eine Norm. Was hier nicht steht: wo der Fehler si
 
 ### K7 · Einstellungen
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -107,7 +107,7 @@ Wiederverwendung fertiger Arbeit: Arbeit, deren Eingaben seit dem letzten Lauf u
 
 ### K8 · Das Ticket im Werkzeug
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -127,7 +127,7 @@ Vor dem Lauf: sieben Repositories auf main, jedes mit seinem Stand. Modelldienst
 
 ### K10 · Das Wissen steht
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel 1**
 
@@ -143,25 +143,37 @@ Was sich nicht geändert hat, wird nicht neu gerechnet. Ändert sich der Bestand
 
 **Untertitel 1**
 
-Architekturfakten: ohne KI aus dem Code gelesen. Jede Beziehung mit Datei und Zeile.
+Jede Phase im Lauf öffnet ihren Bericht – und jeder Bericht die Seite, die das Ergebnis ganz zeigt.
 
 **Untertitel 2**
 
-Architektursynthese: Die KI erklärt den Bestand, geprüft gegen die Fakten. Wo die Fakten schweigen, sagt sie es.
+Architekturfakten: ohne KI aus dem Code gelesen. Die Zahl im Bericht führt zu den Fakten selbst – jede Komponente mit Datei und Zeile.
 
 **Untertitel 3**
 
-Architekturdossier: sechzehn Kapitel — C4 Ebene 1 bis 4 und arc42 §1 bis §12 —, jedes mit Belegen und von einem getrennten Prüfer bewertet. Die KI schreibt. Geprüft wird getrennt. Drei Kapitel stehen hier als Beispiel.
+Architektursynthese: Die KI erklärt den Bestand, geprüft gegen die Fakten. Wo die Fakten schweigen, sagt sie es.
 
 **Untertitel 4**
 
-C4, Ebene 1: der Systemkontext. Wer mit dem Verfahren spricht, was es von außen braucht — ein ganzes Dokument, nicht eine Folie.
+Jede Aussage sagt, woher sie kommt: von einem Werkzeug im Code abgelesen oder von der KI gefolgert – und wie sicher die Analyse ist.
 
 **Untertitel 5**
 
-arc42, Bausteinsicht: aus welchen Diensten das Verfahren besteht und wie sie ineinandergreifen. Gelesen aus dem Code, nicht aus einer Zeichnung von gestern.
+Ein Muster ist keine Behauptung: Aufgeklappt zeigt es die Stellen im Code, an denen es belegt ist.
 
 **Untertitel 6**
+
+Architekturdossier: sechzehn Kapitel — C4 Ebene 1 bis 4 und arc42 §1 bis §12 —, jedes mit Belegen und von einem getrennten Prüfer bewertet. Die KI schreibt. Geprüft wird getrennt. Drei Kapitel stehen hier als Beispiel.
+
+**Untertitel 7**
+
+C4, Ebene 1: der Systemkontext. Wer mit dem Verfahren spricht, was es von außen braucht — ein ganzes Dokument, nicht eine Folie.
+
+**Untertitel 8**
+
+arc42, Bausteinsicht: aus welchen Diensten das Verfahren besteht und wie sie ineinandergreifen. Gelesen aus dem Code, nicht aus einer Zeichnung von gestern.
+
+**Untertitel 9**
 
 arc42, Laufzeitsicht: wie ein Vorgang durch die Dienste läuft. Auf diesem Verständnis sucht die Triage gleich die Ursache.
 
@@ -207,7 +219,7 @@ Kette fortsetzen: Die Phasen davor stehen, der Plan wird übernommen. Was entsch
 
 ### K14 · Delivery Plan und Wartepunkt 2
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -215,7 +227,7 @@ Der Plan nennt die Stellen, die Reihenfolge und die Tests. Zweite Entscheidung, 
 
 ### K15 · Controlled Execution
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -223,7 +235,7 @@ Agenten handeln – die Ausführung beweist. Der Agent hat auf einem Branch in e
 
 ### K16 · Validation Gate
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -249,13 +261,17 @@ Delivery Readiness: Der Branch liegt auf origin, der Pull Request ist vorbereite
 
 *Kurzfassung: ja*
 
-**Untertitel**
+**Untertitel 1**
+
+Vom Bericht direkt zur Änderung: Jede Datei der Umsetzung führt zu ihrem Diff.
+
+**Untertitel 2**
 
 Das Ergebnis ist kein Chat. Es ist ein Branch mit Diff, Tests und Bericht: im Werkzeug lesbar, im Editor weiterführbar.
 
 ### K19 · GitHub
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 
@@ -263,7 +279,7 @@ Auf origin: zwei Dateien im Erhebungsdienst, ein Test im Prüfpaket. Nachvollzie
 
 ### K20 · Verlauf
 
-*Kurzfassung: ja*
+*Kurzfassung: nein*
 
 **Untertitel**
 

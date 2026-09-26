@@ -51,7 +51,7 @@ export const KAPITEL_EN = {
     nr: 3,
     akt: 1,
     titel: "Sign-in and cases",
-    kurz: true,
+    kurz: false,
     text: {
       a: "The clerk of the office signs in. The header band names the state the services run on: main.",
       b: "The office keeps its cases in a list: file number, company, year, state and assessed amount, filterable by state. The case we are about to see is one of many.",
@@ -90,7 +90,7 @@ export const KAPITEL_EN = {
     nr: 7,
     akt: 2,
     titel: "Settings",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Own data. Own rules. Own AI. The platform mode is decided once, when the run starts: SovAI, Capgemini's sovereign platform. Offline would be the local platform on this machine, with the same rules.",
       b: "Reuse of finished work: work whose inputs have not changed since the last run is taken over, not computed again. The run ahead shows what that means.",
@@ -100,7 +100,7 @@ export const KAPITEL_EN = {
     nr: 8,
     akt: 2,
     titel: "The ticket in the tool",
-    kurz: true,
+    kurz: false,
     text: {
       a: "The ticket comes live from Jira, with its links. From here a first solution concept could be drafted straight from the code base — we leave that to the pipeline.",
       b: "Use in pipeline: the ticket is now the task of the run. One task, one run, nothing in parallel.",
@@ -119,7 +119,7 @@ export const KAPITEL_EN = {
     nr: 10,
     akt: 2,
     titel: "The knowledge stands",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Facts first — without AI. Inventory, facts, understanding and dossier stand from the first contact with the code and are taken over.",
       b: "What has not changed is not computed again. When the code base changes, the tool recomputes exactly that, and every result states which inputs it comes from.",
@@ -131,8 +131,11 @@ export const KAPITEL_EN = {
     titel: "A tour of the knowledge",
     kurz: true,
     text: {
-      a: "Architecture facts: read from the code without AI. Every relation with file and line.",
+      s: "Every phase in the run opens its report — and every report the page that shows the result in full.",
+      a: "Architecture facts: read from the code without AI. The number in the report leads to the facts themselves — every component with file and line.",
       b: "Architecture synthesis: the AI explains the code base, checked against the facts. Where the facts are silent, it says so.",
+      b2: "Every statement says where it comes from: read from the code by a tool, or inferred by the AI — and how sure the analysis is.",
+      b3: "A pattern is not a claim: unfolded, it shows the places in the code that prove it.",
       c: "Architecture dossier: sixteen chapters — C4 levels 1 to 4 and arc42 §1 to §12 —, each with evidence and scored by a separate reviewer. The AI writes. Review is separate. Three chapters are shown here as examples.",
       d: "C4, level 1: the system context. Who talks to the procedure, what it needs from outside — a whole document, not a slide.",
       e: "arc42, building block view: which services the procedure consists of and how they fit together. Read from the code, not from yesterday's drawing.",
@@ -167,7 +170,7 @@ export const KAPITEL_EN = {
     nr: 14,
     akt: 2,
     titel: "Delivery plan and waiting point 2",
-    kurz: true,
+    kurz: false,
     text: {
       a: "The plan names the places, the order and the tests. A second decision, before an agent writes code.",
     },
@@ -176,7 +179,7 @@ export const KAPITEL_EN = {
     nr: 15,
     akt: 2,
     titel: "Controlled execution",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Agents act — the execution proves. The agent wrote on a branch in a fenced workspace: only the planned places, with build and tests running alongside. The report records it.",
     },
@@ -185,7 +188,7 @@ export const KAPITEL_EN = {
     nr: 16,
     akt: 2,
     titel: "Validation gate",
-    kurz: true,
+    kurz: false,
     text: {
       a: "Validation gate: it is not the agent who says it works. The tests ran against the running application, and the run showed it.",
     },
@@ -206,6 +209,7 @@ export const KAPITEL_EN = {
     titel: "Changes",
     kurz: true,
     text: {
+      v: "From the report straight to the change: every file of the implementation leads to its diff.",
       a: "The result is not a chat. It is a branch with diff, tests and report: readable in the tool, continued in the editor.",
     },
   },
@@ -213,7 +217,7 @@ export const KAPITEL_EN = {
     nr: 19,
     akt: 3,
     titel: "GitHub",
-    kurz: true,
+    kurz: false,
     text: {
       a: "On origin: two files in the collection service, one test in the test suite. Traceable to the line, reviewable like any other change.",
     },
@@ -222,7 +226,7 @@ export const KAPITEL_EN = {
     nr: 20,
     akt: 3,
     titel: "History",
-    kurz: true,
+    kurz: false,
     text: {
       a: "The history keeps the chain: every run, every decision, every duration. Computed once, taken over in seconds today.",
     },
