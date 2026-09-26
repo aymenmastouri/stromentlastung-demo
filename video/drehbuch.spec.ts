@@ -1567,7 +1567,12 @@ async function k18(ctx: Ctx): Promise<void> {
   // Vom Bericht der Umsetzung zur Änderung: die Datei im Bericht führt zu ihrem Diff.
   let gefolgt = false;
   if (await bericht(ctx, "implement")) {
-    const datei = page.locator("app-report-table .link-cell a").first();
+    // Die Zeile einer Quelldatei, nicht die des Arbeitspakets: der Link führt zu ihrem Diff.
+    const datei = page
+      .locator("app-report-table tr")
+      .filter({ hasText: /\/[^/\s]+\.(java|ts|py|kt|js)\b/ })
+      .locator(".link-cell a")
+      .first();
     if (await datei.isVisible().catch(() => false)) {
       await insBild(ctx, datei, "center");
       await ov.rahmen(page, datei, { spot: true, rand: 10 });
