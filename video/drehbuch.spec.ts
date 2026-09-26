@@ -366,7 +366,17 @@ async function laufBefund(ctx: Ctx, schluessel: string): Promise<void> {
 
 /** Seite Berichte, Bericht der Phase auswählen. */
 async function bericht(ctx: Ctx, phaseId: string): Promise<boolean> {
-  await app(ctx, "/codegen/reports", ".rail-item");
+  // Steht die Seite Berichte schon offen — etwa nach „Zurück zum Bericht“ —,
+  // wird nur die Phase gewechselt: ein Neuladen zeigte sekundenlang eine leere Seite.
+  if (/\/codegen\/reports/.test(ctx.page.url())) {
+    await ctx.page
+      .locator(".rail-item")
+      .first()
+      .waitFor({ state: "visible", timeout: 20_000 })
+      .catch(() => {});
+  } else {
+    await app(ctx, "/codegen/reports", ".rail-item");
+  }
   const daten = await api<{ reports: { phase_id: string }[] }>(
     ctx,
     "/api/reports/phases",
